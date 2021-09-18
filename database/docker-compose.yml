@@ -1,0 +1,23 @@
+---
+version: '3.6'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    command: --sql_mode="NO_ENGINE_SUBSTITUTION"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - imersao-fullcycle
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  imersao-fullcycle:
+    external: true
