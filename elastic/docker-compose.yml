@@ -1,0 +1,41 @@
+---
+version: '3.6'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+    container_name: elasticsearch
+    networks:
+      - imersao-fullcycle
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=elastic-cluster
+      - cluster.initial_master_nodes=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.14.1
+    container_name: kibana
+    networks:
+      - imersao-fullcycle
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+
+volumes:
+  elasticsearch-data:
+    driver: local
+
+networks:
+  imersao-fullcycle:
+    external: true

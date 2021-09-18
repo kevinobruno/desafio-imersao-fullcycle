@@ -4,12 +4,16 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.0.4
     container_name: kafka_zookeeper
+    networks:
+      - imersao-fullcycle
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka:
     image: confluentinc/cp-kafka:6.0.4
     container_name: kafka
+    networks:
+      - imersao-fullcycle
     depends_on:
       - zookeeper
     ports:
@@ -28,6 +32,8 @@ services:
     image: confluentinc/cp-enterprise-control-center:6.0.4
     container_name: kafka_control_center
     hostname: control-center
+    networks:
+      - imersao-fullcycle
     depends_on:
       - kafka
     ports:
@@ -36,3 +42,7 @@ services:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:9092'
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       PORT: 9021
+
+networks:
+  imersao-fullcycle:
+    external: true

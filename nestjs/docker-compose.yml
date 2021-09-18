@@ -5,8 +5,14 @@ services:
     build: .
     container_name: nestjs
     command: npm run start:dev
+    networks:
+      - imersao-fullcycle
     ports:
       - 3000:3000
     volumes:
       - .:/app
       - /app/node_modules
+
+networks:
+  imersao-fullcycle:
+    external: true
