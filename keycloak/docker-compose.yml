@@ -1,0 +1,18 @@
+---
+version: '3.6'
+services:
+  keycloak:
+    image: jboss/keycloak:15.0.2
+    container_name: keycloak
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2
+    ports:
+      - 7000:8080
+    volumes:
+      - keycloak-data:/opt/jboss/keycloak/standalone/data
+
+volumes:
+  keycloak-data:
+    driver: local

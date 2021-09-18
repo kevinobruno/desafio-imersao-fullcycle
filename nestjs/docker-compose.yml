@@ -1,0 +1,12 @@
+---
+version: '3.6'
+services:
+  nestjs:
+    build: .
+    container_name: nestjs
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
