@@ -21,7 +21,7 @@ import { TransactionsModule } from './transactions/transactions.module';
       models: [Account, Transaction],
       autoLoadModels: true,
       synchronize: true,
-      sync: { alter: true, force: true },
+      sync: { alter: true },
     }),
     AccountsModule,
     TransactionsModule,
