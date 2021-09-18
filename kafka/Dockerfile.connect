@@ -1,0 +1,6 @@
+# Base image
+FROM confluentinc/cp-kafka-connect-base:6.0.4
+
+# Install connectors
+RUN confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:10.0.1
+RUN confluent-hub install --no-prompt debezium/debezium-connector-mysql:1.6.0

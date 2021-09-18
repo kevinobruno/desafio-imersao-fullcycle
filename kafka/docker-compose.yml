@@ -29,7 +29,9 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
 
   kafka-connect:
-    image: confluentinc/cp-kafka-connect-base:6.0.4
+    build:
+      context: .
+      dockerfile: Dockerfile.connect
     container_name: kafka_connect
     networks:
       - imersao-fullcycle
@@ -55,9 +57,6 @@ services:
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
-      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components,/data/connect-jars\
-    volumes:
-      - kafka-connect-data:/data
 
   control-center:
     image: confluentinc/cp-enterprise-control-center:6.0.4
@@ -73,10 +72,6 @@ services:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:9092'
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       PORT: 9021
-
-volumes:
-  kafka-connect-data:
-    driver: local
 
 networks:
   imersao-fullcycle:
